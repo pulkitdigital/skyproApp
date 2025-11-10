@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "357639930035",
+    "project_id": "student-feedback-bc8ee",
+    "storage_bucket": "skypro-courese.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357639930035:android:3c18944366858e3632f0c6",
+        "android_client_info": {
+          "package_name": "com.example.skypro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh1zh8AfbffKi2L7HAzHY0_wJifpzYxyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
