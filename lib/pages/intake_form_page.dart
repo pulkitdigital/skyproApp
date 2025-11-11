@@ -37,7 +37,8 @@ class _IntakeFormPageState extends State<IntakeFormPage> {
     super.initState();
 
     _stateBySection = {
-      for (final s in sections) s.key: {for (final item in s.items) item: false}
+      for (final s in sections)
+        s.key: {for (final item in s.items) item: false},
     };
 
     _instructorsFuture = _fetchNamed('instructors');
@@ -81,16 +82,17 @@ class _IntakeFormPageState extends State<IntakeFormPage> {
   Future<void> _prefillFromStudent(String id) async {
     final d = await _getDoc('students', id);
     if (d == null) return;
-    _studentEmail =
-        (d['student_email'] ?? d['email'] ?? d['studentEmail'])?.toString();
+    _studentEmail = (d['student_email'] ?? d['email'] ?? d['studentEmail'])
+        ?.toString();
     _parentEmail = (d['parent_e_mail'] ?? d['parent_email'] ?? d['parentEmail'])
         ?.toString();
-    _phone = (d['student_mobile_no_'] ??
-            d['mobile_no_'] ??
-            d['phone'] ??
-            d['student_mobile'] ??
-            d['mobile'])
-        ?.toString();
+    _phone =
+        (d['student_mobile_no_'] ??
+                d['mobile_no_'] ??
+                d['phone'] ??
+                d['student_mobile'] ??
+                d['mobile'])
+            ?.toString();
   }
 
   List<String> _selected(Map<String, bool> m) =>
@@ -102,7 +104,9 @@ class _IntakeFormPageState extends State<IntakeFormPage> {
 
     if (_studentId == null || _instructorId == null) {
       _dialog(
-          'Select required fields', 'Please choose Student and Instructor.');
+        'Select required fields',
+        'Please choose Student and Instructor.',
+      );
       return;
     }
 
@@ -144,23 +148,25 @@ class _IntakeFormPageState extends State<IntakeFormPage> {
           .set({...data, 'feedbackRef': fbRef});
 
       // 2) Apps Script Sheet — send modern section keys directly (kno, pro, com, fpa, fpm, ltw, pcd, saw, wlm)
-      unawaited(postToAppsScript({
-        'mode': 'feedback_submit',
-        'sheetName': 'feedback',
-        'studentId': _studentId!,
-        'studentName': studentName,
-        'instructorId': _instructorId!,
-        'instructorName': instructorName,
-        for (final e in sectionArrays.entries)
-          e.key: (e.value as List).join(', '),
-        'review': _reviewCtrl.text.trim(),
-        'studentEmail': _studentEmail ?? '',
-        'parentEmail': _parentEmail ?? '',
-        'phone': _phone ?? '',
-        'createdAtLocal': data['createdAtLocal'] as String,
-        'sendEmails': 'false',
-        'emailTargets': 'student,parent,instructor,org',
-      }));
+      unawaited(
+        postToAppsScript({
+          'mode': 'feedback_submit',
+          'sheetName': 'feedback',
+          'studentId': _studentId!,
+          'studentName': studentName,
+          'instructorId': _instructorId!,
+          'instructorName': instructorName,
+          for (final e in sectionArrays.entries)
+            e.key: (e.value as List).join(', '),
+          'review': _reviewCtrl.text.trim(),
+          'studentEmail': _studentEmail ?? '',
+          'parentEmail': _parentEmail ?? '',
+          'phone': _phone ?? '',
+          'createdAtLocal': data['createdAtLocal'] as String,
+          'sendEmails': 'false',
+          'emailTargets': 'student,parent,instructor,org',
+        }),
+      );
 
       if (!mounted) return;
       _dialog('Done 🎉', 'Feedback submitted successfully.');
@@ -195,7 +201,9 @@ class _IntakeFormPageState extends State<IntakeFormPage> {
         content: Text(m),
         actions: [
           TextButton(
-              onPressed: () => Navigator.pop(context), child: const Text('OK')),
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
         ],
       ),
     );
@@ -218,14 +226,19 @@ class _IntakeFormPageState extends State<IntakeFormPage> {
           preferredSize: const Size.fromHeight(70),
           child: Container(
             color: kHeaderBg,
-            padding:
-                EdgeInsets.symmetric(horizontal: horizontalPad, vertical: 10),
+            padding: EdgeInsets.symmetric(
+              horizontal: horizontalPad,
+              vertical: 10,
+            ),
             child: SafeArea(
               bottom: false,
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Image.asset('assets/logo.webp',
-                    height: logoH, fit: BoxFit.contain),
+                child: Image.asset(
+                  'assets/logo.webp',
+                  height: logoH,
+                  fit: BoxFit.contain,
+                ),
               ),
             ),
           ),
@@ -259,7 +272,8 @@ class _IntakeFormPageState extends State<IntakeFormPage> {
                       const SizedBox(height: 12),
                       Card(
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14)),
+                          borderRadius: BorderRadius.circular(14),
+                        ),
                         elevation: 6,
                         child: Padding(
                           padding: EdgeInsets.symmetric(
@@ -303,8 +317,10 @@ class _IntakeFormPageState extends State<IntakeFormPage> {
                                 minLines: 2,
                                 maxLines: 6,
                                 textInputAction: TextInputAction.newline,
-                                decoration: _dec('Review / Notes (optional)',
-                                    Icons.rate_review),
+                                decoration: _dec(
+                                  'Review / Notes (optional)',
+                                  Icons.rate_review,
+                                ),
                               ),
                               const SizedBox(height: 16),
                               Row(
@@ -353,8 +369,9 @@ Future<List<NamedRef>> _fetchNamed(String collection) async {
   final key = _displayKeyFor(collection);
   final list = snap.docs.map((d) {
     final data = d.data();
-    final raw =
-        (data[key] ?? data['name'] ?? data['title'] ?? '').toString().trim();
+    final raw = (data[key] ?? data['name'] ?? data['title'] ?? '')
+        .toString()
+        .trim();
     final display = raw.isNotEmpty ? raw : d.id;
     return NamedRef(d.id, display);
   }).toList();
