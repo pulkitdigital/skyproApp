@@ -9,16 +9,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.2.0
-  # ✅ Use only one firebase_core (keep this)
   firebase_core: ^3.6.0
   cloud_firestore: ^5.4.4
+  firebase_auth: ^5.3.4   # ⬅️ add this
+  http: ^1.2.0
   intl: ^0.20.2
   video_player: ^2.9.2
+  connectivity_plus: ^6.0.5
+  hive_flutter: ^1.1.0
+  uuid: ^4.5.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^4.0.0 
 
 flutter:
   uses-material-design: true

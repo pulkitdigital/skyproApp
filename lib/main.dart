@@ -1010,6 +1010,11 @@ void main() async {
   await initFirebase(kIsWeb: kIsWeb);
   runApp(const MyApp());
 }
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await initFirebase();
+//   runApp(const MyApp());
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
